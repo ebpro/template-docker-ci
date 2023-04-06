@@ -64,7 +64,11 @@ jobs:
               mirrors = ["${{ secrets.DOCKERHUB_PROXY_HOSTNAME }}"]
           driver-opts: |
             network=host
-
+          buildkitd-flags: |
+            --debug 
+            --allow-insecure-entitlement network.host
+            --allow-insecure-entitlement security.insecure  
+            
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
