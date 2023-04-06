@@ -61,14 +61,17 @@ jobs:
         with:       
           config-inline: |
             [registry."docker.io"]
-              mirrors = ["${{ secrets.DOCKERHUB_PROXY_HOSTNAME }}"]
+              mirrors = ["${{ secrets.DOCKERHUB_PROXY_HOSTNAME }}"]            
+            [registry."${{ secrets.PRIVATEHUB_HOSTNAME }}"]
+              http = true
+              insecure = true
           driver-opts: |
             network=host
           buildkitd-flags: |
             --debug 
             --allow-insecure-entitlement network.host
             --allow-insecure-entitlement security.insecure  
-            
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
